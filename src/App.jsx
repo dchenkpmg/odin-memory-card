@@ -43,8 +43,6 @@ function App() {
     fetchCards();
   }, []);
 
-  console.log(cards);
-
   function shuffleGame(array) {
     array.sort(() => Math.random() - 0.5);
     return array;
@@ -52,10 +50,24 @@ function App() {
 
   const handleReset = () => {
     setCards(shuffleGame(cards));
+    setScore(0);
+    setMaxScore(0);
   };
 
-  const handleClick = (e) => {
-    
+  const handleClick = (index) => {
+    if (clicked.has(index)) {
+      setScore(0);
+      setClicked(new Set());
+    } else {
+      const newClickedCards = new Set(clicked);
+      newClickedCards.add(index);
+      setClicked(newClickedCards);
+      setScore(score + 1);
+      if (score + 1 > maxScore) {
+        setMaxScore(score + 1);
+      }
+    }
+    setCards(shuffleGame([...cards]));
   };
 
   return (
@@ -75,7 +87,11 @@ function App() {
         </div>
         <div className="card-grid">
           {cards.map((pokemon, index) => (
-            <button key={index} className="card">
+            <button
+              key={index}
+              className="card"
+              onClick={() => handleClick(index)}
+            >
               <img
                 src={pokemon.sprites.front_default}
                 alt="pokemon sprite"
