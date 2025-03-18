@@ -87,4 +87,48 @@ body {
 header {
   display: flex;
   justify-content: center;
+  /* margin-bottom: 3rem; */
+}
+
+.messages {
+  display: flex;
+  justify-content: center;
+}
+
+.scores {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, auto);
+  justify-self: center;
+  gap: 1rem;
+}
+
+.card-grid button {
+  border: none;
+  border-radius: 5px;
+}
+
+.card-grid p {
+  padding: 0.5rem;
+}
+
+.reset-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.reset-btn {
+  padding: 1rem;
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(56, 157, 102);
+  color: #ffffff;
 }

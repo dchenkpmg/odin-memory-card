@@ -7,6 +7,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [score, setScore] = useState(0);
+  const [maxScore, setMaxScore] = useState(0);
+  const [clicked, setClicked] = useState(new Set());
+
   useEffect(() => {
     const fetchCards = async () => {
       try {
@@ -27,7 +31,7 @@ function App() {
         });
 
         const allPokemon = await Promise.all(pokemon);
-        setCards(allPokemon);
+        setCards(shuffleGame(allPokemon));
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -41,6 +45,19 @@ function App() {
 
   console.log(cards);
 
+  function shuffleGame(array) {
+    array.sort(() => Math.random() - 0.5);
+    return array;
+  }
+
+  const handleReset = () => {
+    setCards(shuffleGame(cards));
+  };
+
+  const handleClick = (e) => {
+    
+  };
+
   return (
     <>
       <title>Memory Game</title>
@@ -48,9 +65,29 @@ function App() {
         <h1>Memory Game</h1>
       </header>
       <main>
-        <div className="card-grid">
+        <div className="scores">
+          <p>Score: {score}</p>
+          <p>Max Score: {maxScore}</p>
+        </div>
+        <div className="messages">
           {loading && <p>Loading Pokemon...</p>}
           {error && <p>{error}</p>}
+        </div>
+        <div className="card-grid">
+          {cards.map((pokemon, index) => (
+            <button key={index} className="card">
+              <img
+                src={pokemon.sprites.front_default}
+                alt="pokemon sprite"
+              ></img>
+              <p>{pokemon.name}</p>
+            </button>
+          ))}
+        </div>
+        <div className="reset-div">
+          <button className="reset-btn" onClick={handleReset}>
+            Reset Game
+          </button>
         </div>
       </main>
     </>
