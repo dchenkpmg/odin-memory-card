@@ -54,13 +54,13 @@ function App() {
     setMaxScore(0);
   };
 
-  const handleClick = (index) => {
-    if (clicked.has(index)) {
+  const handleClick = (id) => {
+    if (clicked.has(id)) {
       setScore(0);
       setClicked(new Set());
     } else {
       const newClickedCards = new Set(clicked);
-      newClickedCards.add(index);
+      newClickedCards.add(id);
       setClicked(newClickedCards);
       setScore(score + 1);
       if (score + 1 > maxScore) {
@@ -86,11 +86,11 @@ function App() {
           {error && <p>{error}</p>}
         </div>
         <div className="card-grid">
-          {cards.map((pokemon, index) => (
+          {cards.map((pokemon) => (
             <button
-              key={index}
+              key={pokemon.id}
               className="card"
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(pokemon.id)}
             >
               <img
                 src={pokemon.sprites.front_default}
